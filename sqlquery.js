@@ -42,4 +42,4 @@ AND a.TIME < b.TIME
     
 }
 
-module.exports = {getSqlTable, getLocations, getRoute}
+module.exports = {getSqlTable, getLocations}
