@@ -1,0 +1,10 @@
+{
+	"userName": "ptaadmin",
+	"password": "h!l0busP7A!",
+	"server": "ptabus.database.windows.net",
+	"options": {
+		"encrypt": true,
+		"database": "HawaiiBusSchedule",
+		"timeout": 30000
+	}
+}
