@@ -32,7 +32,7 @@ $(document).ready(function() {
 		console.log("locations", locations)
 	    for (var k in locations) {
 			if (locations.hasOwnProperty(k)) {
-				list[k] = {label: locations[k].L_Name, value: String(locations[k].L_ID)}
+				list[k] = {label: locations[k].L_Name, value: String(locations[k].L_Name)}
 			}
 		}
 		console.log(list, inputs)
