@@ -47,7 +47,7 @@ function parseDate(date) {
 	Index Page
 */
 app.get('/', (req, res) => {
-	res.render('index_t')
+	res.render('index')
 })
 
 app.post('/form', (req, res) => {
