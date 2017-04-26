@@ -1,0 +1,102 @@
+<div class="#" id="image">
+		<section>
+				
+			<div id="container" align="center" class="relative">
+				  <img src="images/bus2.jpg" alt="starting" style="width: 100%;" />  
+			
+					<div class="absolute-text">
+						<div class="w3-container w3-red text-center">
+							<h1><strong>Hele-On Bus System</h1>
+							<h3><strong>Hawaii County Mass Transit Agency.</h3>
+							<br><br>
+							<div ng-controller="myCtrl">
+								<form action="/form" class="form-inline"  method="post">
+									<div class="form-group">
+				                    <label for="fromB">Starting location:  &nbsp;</label>
+									<input id="from" name="loc_start" type="text" value=""  ng-model="data.start" class="form-control location" placeholder="From">
+									<!-- input id="loc_start" name="loc_start" type="hidden" class="form-control loc_target" -->
+									</div>
+									<br><br>
+									<div class="form-group">
+									<label for="end">Destination  :   &nbsp;</label>
+									<input name="loc_end" id="to" type="text" value="" ng-model="data.finish" class="form-control location" placeholder="To">
+									<!-- input id="loc_end" name="loc_end" type="hidden" class="form-control loc_target" -->
+									</div>
+									<br><br>
+									<div class="form-group">
+									<label for="time">Start Time: &nbsp;</label>
+									<input name="time_start" type="time" id="startTime" value="" ng-model="data.sTime" placeholder="Pick up time">
+									</div>
+									<br><br>
+									<div class="form-group">
+									<label for="time">Finish Time: &nbsp;</label>
+									<input name="time_end" type="time" id="finishTime" value="" ng-model="data.fTime" placeholder="Pick up time">
+									</div>
+									<br><br>
+									<div class="form-group">
+									<label for="date">Date: &nbsp;</label>
+									<input name="target_date" type="date" id="myDate" value="" ng-model="data.mDate" placeholder="Date of travel"> <!--from javascript for date function-->
+									</div>
+									<br><br>
+				                     
+				                        <label for chkend>Weekend</label>
+				                        <input name="cb_we" type = "checkbox" id = "wkend" value = "Weekend" />
+				                        <label for = "checkwkdays">Week Days</label>
+				                        <input name="cb_wd" type = "checkbox" id = "wkdays" value = "weekdays" />
+				                        <label for = "chkRoute">Route</label>
+				                        <input name="cb_route" type = "checkbox" id = "routes" value = "route" />
+				                        <label for = "chkRoute">Bus</label>
+				                        <input name="cb_bus" type = "checkbox" id = "bus" value = "Bus" />
+			                     
+			                    	<br><br>
+									 <input type="submit" value="Submit"  class="btn btn-success" ng-click="submit()">
+
+<script>
+$(document).ready(function() {
+	console.log("loaded")
+	var inputs = document.getElementsByClassName("location");
+	var list = [];
+
+	$.get("/locations").then((locations) => {
+		console.log("locations", locations)
+	    for (var k in locations) {
+			if (locations.hasOwnProperty(k)) {
+				list[k] = {label: locations[k].L_Name, value: String(locations[k].L_Name)}
+			}
+		}
+		console.log(list, inputs)
+		var i = 0;
+		for (i = 0; i < inputs.length; i++) {
+			var temp
+			console.log(temp = new Awesomplete(inputs[i], {list: list}))
+			inputs[i].addEventListener('awesomplete-close', (e) => {
+				console.log(e)
+			})
+		}
+	})
+	
+	
+	
+})
+</script>
+
+								</form>
+							</div>				 
+            			</div>
+            			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+						<div class="container text-center">
+							<div class="btn-group"></div>
+							<a href="Admin.html" class="btn btn-lag btn-info"> Admin  &nbsp;</a>
+							<a href="Buses_frontend.html" class="btn btn-lag btn-info"> Buses  &nbsp;</a>
+							<a href="Drivers_frontend.html" class="btn btn-lag btn-info"> Drivers &nbsp;</a>
+							<a href="Holidays.html" class="btn btn-lag btn-info"> Holidays &nbsp;</a>
+						</div><!--end container-->
+
+						<br><br><br><br><br><br>
+					</div><!--end container-->
+			</div>			
+		</section>
+	</div> <!--carousel end -->
+
+    <div ng-view></div>

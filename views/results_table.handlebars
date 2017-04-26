@@ -1,0 +1,38 @@
+	<!--jumbotron-->
+	<div class="jumbotron">
+		<div class="container text-center">
+			<h1>Hele-On Bus</h1>
+			<p>Hawaii County Mass Transit Agency</p>
+		</div><!--end container-->
+	</div><!--end jambotron-->
+
+	<!--Gallery-->
+	<div class="#" id="image">
+		<section>
+				
+			<div id="container" align="center" class="relative">
+			
+				<div class="absolute-text">
+					<div class="w3-container w3-red text-center">
+					<h2><strong>{{title}}</h2>
+					<h4><strong>{{subtitle}}</h4>
+					<br><br>				 
+           			</div>
+           			<br><br><br>
+					<div class="container text-center" text-align="center">
+						<table align="center">
+						{{#each table}}
+						<tr>
+						{{#each this}}
+						<td style="min-width: 8em;">{{this}}</td>
+						{{/each}}
+						</tr>
+						{{/each}}
+						</table>
+					</div><!--end container-->
+					<br><br><br><br><br>
+				</div><!--end container-->
+
+			</div>			
+		</section>
+	</div> <!--carousel end -->
