@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>CS421</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+      <script src="angular.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script src="script.js"/>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link type="text/css" href="css/bootstrap.min.css" />
+    <link type="text/css" href="css/bootstrap-timepicker.min.css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
+
+    <style>
+	div. {
+	    background-color: green;
+	}
+	</style>
+</head>
+
+ <body ng-controller="MainCtrl">
+	<nav class="navbar navbar-inverse">
+  		<div class="container-fluid">
+ 
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <!--logo -->
+		    <div class="navbar-header">
+		    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+			    	<span class="icon-bar"></span>
+			    	<span class="icon-bar"></span>
+			    	<span class="icon-bar"></span>
+		    	</button>
+		    	<a href="#" class="navbar-brand">Hilo Bus System</a>
+		    </div><!--end header-->
+
+    <!-- main menu items -->
+	    	<div class="collapse navbar-collapse" id="mainNavBar">
+		    	<ul class="nav navbar-nav">
+		    		<li class="active">
+		    			<a href="#">Home</a>
+		    		</li> 
+		    		 <!--drop down menu -->
+
+		    		 <li class="#">
+			    		<a href="#"> Contact </a>
+		    		 </li>
+
+		    		 <li class="dropdown">
+		    		 	<a href="#">About</a>
+		    		 </li>
+				</ul>
+			<!-- right align -->
+			    <ul class="nav navbar-right">
+				<li><a href="#">Logout</a></li>
+			    </ul>
+		   </div><!--end container-->
+	    </div>
+	</nav><!--end navbar-->
+
+	<!--jumbotron-->
+	<div class="jumbotron">
+		<div class="container text-center">
+			<h1>Hele-On Bus</h1>
+			<p>Hawaii County Mass Transit Agency</p>
+		</div><!--end container-->
+	</div><!--end jambotron-->
+
+	<!--Galarry-->
+	<div class="#" id="image">
+		<section>
+				
+			<div id="container" align="center" class="relative">
+			
+					<div class="absolute-text">
+						<div class="w3-container w3-red text-center">
+						<h2><strong>Maintenance</h2>
+						<h4><strong>Bus in maintenance</h4>
+						<br><br>				 
+            			</div>
+            			<br><br><br>
+						<div class="container text-center">
+							
+						</div><!--end container-->
+
+					</div><!--end container-->
+			</div>			
+		</section>
+	</div> <!--carousel end -->
+
+    <div ng-view></div>
+</body>
+</html>
