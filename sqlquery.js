@@ -219,7 +219,6 @@ AND (r.R_ID < 100)
 module.exports = {
 	getSqlTable,
 	getLocations,
-	getRouteIDs,
 	getResultsInRoute,
 	getDriverNames,
 	getHolidays,
