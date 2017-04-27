@@ -44,12 +44,14 @@ function parseDate(date) {
 
 
 /*
-	Index Page
+	Page Handlers
 */
+// Index Page
 app.get('/', (req, res) => {
 	res.render('index')
 })
 
+// Submit the Search Form
 app.post('/form', (req, res) => {
 	var data = req.body
 	console.log(data)
@@ -74,7 +76,7 @@ app.get('/nav-buses', (req, res) => {
 	query.getBuses(false)
 	.then((r) => {
 		console.log(r)
-		res.render('results_table', {title:'Buses', subtitle: 'Buses assigned to each route', table: r})
+		res.render('results_table', {title:'Buses', subtitle: 'List of our Buses', table: r})
 	})
 	.fail((e) => {
 		res.send(e)
@@ -111,11 +113,11 @@ app.get('/nav-holidays', (req, res) => {
 	Admin Options
 */
 app.get('/admin-buses', (req, res) => {
-	query.getSqlTable("*", "BUS")
+	query.getBuses(true)
 	.then((r) => {
 		console.log(r)
 		console.log("got")
-		res.render('results_table', {title:'Bus Status', subtitle: 'Status of all buses', table: r})
+		res.render('results_table', {title:'Bus Status', subtitle: 'Status of all buses on each Route effected', table: r})
 	})
 	.fail((e) => {
 		res.send(e)
@@ -135,11 +137,25 @@ app.get('/admin-drivers', (req, res) => {
 })
 
 app.get('/admin-maint', (req, res) => {
-	
+	query.getMaint()
+	.then((r) => {
+		console.log(r)
+		res.render('results_table', {title:'Buses', subtitle: 'List of our Buses', table: r})
+	})
+	.fail((e) => {
+		res.send(e)
+	})
 })
 
 app.get('/admin-hours', (req, res) => {
-	
+	query.getHours()
+	.then((r) => {
+		console.log(r)
+		res.render('results_table', {title:'Hours', subtitle: 'Employee Hours Driven', table: r})
+	})
+	.fail((e) => {
+		res.send(e)
+	})
 })
 
 

@@ -141,6 +141,8 @@ FROM DRIVER
 ORDER BY ${(admin ? 'Lname, ' : '')}FName
 `
 
+	if (admin) query = 'SELECT * FROM DRIVER'
+
 	return tp
 	.sql(query)
 	.execute()
@@ -191,14 +193,55 @@ FROM HOLIDAY
 function getBuses(admin) {
 	var query =
 `
-SELECT DISTINCT b.Type, r.R_Name
+SELECT DISTINCT b.B_ID, b.Type, b.Status, r.R_Name
 FROM BUS b, ROUTE r, ROUTE_ASSIGNED a
 WHERE (b.B_ID = a.B_ID)
 AND (r.R_ID = a.R_ID)
-AND (r.R_ID < 100)
 `
 
-	if (admin) query = 'SELECT * FROM BUS'
+	if (!(admin)) query = 'SELECT * FROM BUS'
+
+	return tp
+	.sql(query)
+	.execute()
+	.then(function(results){
+		return Promise.resolve(results)
+	}) // follow up on the results
+	.fail(function(err) {
+		return Promise.reject(err)
+	}) // or do something if it errors
+}
+
+// get the status and reason for buses in maintenance
+function getMaint() {
+	var query =
+`
+SELECT b.B_ID, b.Type, s.Job_ID, s.Date, m.Description
+FROM BUS b, MAINTENANCE m, SCHEDULED s
+WHERE (b.B_ID = s.B_ID)
+AND (s.Job_ID = m.Job_ID)
+`
+
+	return tp
+	.sql(query)
+	.execute()
+	.then(function(results){
+		for (i in results) if (results.hasOwnProperty(i)) {
+			if (exists(results[i].Date)) results[i].Date = datetime.create(results[i].Date, 'f d, Y').format()
+		}
+		return Promise.resolve(results)
+	}) // follow up on the results
+	.fail(function(err) {
+		return Promise.reject(err)
+	}) // or do something if it errors
+}
+
+function getHours() {
+	var query =
+`
+SELECT d.FName, d.LName, d.Hrs_driven
+FROM DRIVER d
+`
 
 	return tp
 	.sql(query)
@@ -222,5 +265,7 @@ module.exports = {
 	getResultsInRoute,
 	getDriverNames,
 	getHolidays,
-	getBuses
+	getBuses,
+	getMaint,
+	getHours
 }
