@@ -56,10 +56,17 @@ app.post('/form', (req, res) => {
 	var data = req.body
 	console.log(data)
 	if (exists(data.target_date)) {
+		query.getRIDsQuery(data)
+		query.getResults(data)
+		.then((r) => {
+			console.log("results\n--------\n", r, "\n--------\nresults")
+		})
+		.fail((e) => {
+			console.log("error\n--------\n", e, "\n--------\nerror")
+		})
 		console.log(data.target_date)
-		var dt = datetime.create(data.target_date + ' 00:00')
-		console.log(dt)
 		console.log(day(dt))
+		var dt = datetime.create(data.target_date + ' 00:00')
 	}
 })
 

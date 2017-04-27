@@ -1,0 +1,448 @@
+Listening on port 3000
+{ loc_start: '',
+  loc_end: '',
+  time_start: '',
+  time_end: '',
+  target_date: '2017-04-23' }
+no start loc
+no end loc
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- make sure start location matches its named id
+AND (s.L_ID = a.L_ID)
+
+
+-- make sure end location matches its named id
+AND (e.L_ID = b.L_ID)
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+no start loc
+no end loc
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- make sure start location matches its named id
+AND (s.L_ID = a.L_ID)
+
+
+-- make sure end location matches its named id
+AND (e.L_ID = b.L_ID)
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+2017-04-23
+DateTime {
+  _created: 1493260695076,
+  _now: Sun Apr 23 2017 00:00:00 GMT-1000 (HST),
+  _delta: 319095076,
+  _defaultFormat: null }
+Sunday
+results
+--------
+ [ { R_ID: 78 },
+  { R_ID: 79 },
+  { R_ID: 80 },
+  { R_ID: 81 },
+  { R_ID: 82 },
+  { R_ID: 83 },
+  { R_ID: 84 },
+  { R_ID: 85 },
+  { R_ID: 86 },
+  { R_ID: 87 },
+  { R_ID: 88 },
+  { R_ID: 89 },
+  { R_ID: 90 },
+  { R_ID: 91 },
+  { R_ID: 92 },
+  { R_ID: 93 },
+  { R_ID: 94 },
+  { R_ID: 95 } ] 
+--------
+results
+{ loc_start: '',
+  loc_end: '',
+  time_start: '',
+  time_end: '',
+  target_date: '2017-04-23' }
+no start loc
+no end loc
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- make sure start location matches its named id
+AND (s.L_ID = a.L_ID)
+
+
+-- make sure end location matches its named id
+AND (e.L_ID = b.L_ID)
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+no start loc
+no end loc
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- make sure start location matches its named id
+AND (s.L_ID = a.L_ID)
+
+
+-- make sure end location matches its named id
+AND (e.L_ID = b.L_ID)
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+2017-04-23
+DateTime {
+  _created: 1493260698281,
+  _now: Sun Apr 23 2017 00:00:00 GMT-1000 (HST),
+  _delta: 319098281,
+  _defaultFormat: null }
+Sunday
+results
+--------
+ [ { R_ID: 78 },
+  { R_ID: 79 },
+  { R_ID: 80 },
+  { R_ID: 81 },
+  { R_ID: 82 },
+  { R_ID: 83 },
+  { R_ID: 84 },
+  { R_ID: 85 },
+  { R_ID: 86 },
+  { R_ID: 87 },
+  { R_ID: 88 },
+  { R_ID: 89 },
+  { R_ID: 90 },
+  { R_ID: 91 },
+  { R_ID: 92 },
+  { R_ID: 93 },
+  { R_ID: 94 },
+  { R_ID: 95 } ] 
+--------
+results
+{ loc_start: 'moo',
+  loc_end: 'Prince Kuhio Plaza',
+  time_start: '',
+  time_end: '',
+  target_date: '2017-04-23' }
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- pair start name and id
+AND (s.L_Name = 'moo')
+
+
+-- pair end name and id
+AND (e.L_Name = 'Prince Kuhio Plaza')
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- pair start name and id
+AND (s.L_Name = 'moo')
+
+
+-- pair end name and id
+AND (e.L_Name = 'Prince Kuhio Plaza')
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+2017-04-23
+DateTime {
+  _created: 1493260729982,
+  _now: Sun Apr 23 2017 00:00:00 GMT-1000 (HST),
+  _delta: 319129982,
+  _defaultFormat: null }
+Sunday
+results
+--------
+ [] 
+--------
+results
+{ loc_start: 'Mooheau Bus Terminal',
+  loc_end: 'Prince Kuhio Plaza',
+  time_start: '',
+  time_end: '',
+  target_date: '2017-04-23' }
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- pair start name and id
+AND (s.L_Name = 'Mooheau Bus Terminal')
+
+
+-- pair end name and id
+AND (e.L_Name = 'Prince Kuhio Plaza')
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- pair start name and id
+AND (s.L_Name = 'Mooheau Bus Terminal')
+
+
+-- pair end name and id
+AND (e.L_Name = 'Prince Kuhio Plaza')
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+2017-04-23
+DateTime {
+  _created: 1493260763295,
+  _now: Sun Apr 23 2017 00:00:00 GMT-1000 (HST),
+  _delta: 319163295,
+  _defaultFormat: null }
+Sunday
+results
+--------
+ [] 
+--------
+results
+{ loc_start: 'Mooheau Bus Terminal',
+  loc_end: 'Prince Kuhio Plaza',
+  time_start: '',
+  time_end: '',
+  target_date: '2017-04-23' }
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- pair start name and id
+AND (s.L_Name = 'Mooheau Bus Terminal')
+
+
+-- pair end name and id
+AND (e.L_Name = 'Prince Kuhio Plaza')
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+no start time
+no end time
+getRIDsQuery: 
+ 
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+
+-- pair start name and id
+AND (s.L_Name = 'Mooheau Bus Terminal')
+
+
+-- pair end name and id
+AND (e.L_Name = 'Prince Kuhio Plaza')
+
+
+
+
+AND r.R_Type IN ('DL')
+
+GROUP BY a.R_ID
+
+2017-04-23
+DateTime {
+  _created: 1493260914915,
+  _now: Sun Apr 23 2017 00:00:00 GMT-1000 (HST),
+  _delta: 319314915,
+  _defaultFormat: null }
+Sunday
+results
+--------
+ [] 
+--------
+results

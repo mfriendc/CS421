@@ -19,6 +19,11 @@ function parseTime(time) {
 	return datetime.create(time).offsetInHours(10)
 }
 
+function dateToDay(d) {
+	var t = datetime.create(d + ' 00:00')
+	return new Date(t.getTime()).getDay()
+}
+
 function day(d) {
 	var days = [
 		"Sunday",
@@ -53,7 +58,7 @@ function month(d) {
 
 
 /*
-	Query Functions
+	Main Query Functions
 */
 /*
 	manually get a specific table and attributes
@@ -85,25 +90,160 @@ function getLocations() {
 }
 
 /*
+	gets the query that matches the R_IDs that
+	are within the limits of the search query object
+*/
+function getRIDsQuery(o) {
+	// ===== Initialize Variables =====
+	var loc_check_start = ''
+	var loc_check_end = ''
+	var time_offset = 0
+	var time_check_start = ''
+	var time_check_end = ''
+	var day_check = ''
+
+	// ===== Location Checks =====
+	// Location Start
+	if (exists(o.loc_start)) {
+		// start location exists, so we can specify the start segment
+		loc_check_start = 
+`
+-- pair start name and id
+AND (s.L_Name = '${o.loc_start}')
+`
+	} else {
+		// start location does not exist
+		console.log('no start loc')
+		loc_check_start =
+`
+-- make sure start location matches its named id
+AND (s.L_ID = a.L_ID)
+`
+	}
+
+	// Location End
+	if (exists(o.loc_end)) {
+		// end location exists
+		loc_check_end =
+`
+-- pair end name and id
+AND (e.L_Name = '${o.loc_end}')
+`
+	} else {
+		// end location does not exist
+		console.log('no end loc')
+		loc_check_end =
+`
+-- make sure end location matches its named id
+AND (e.L_ID = b.L_ID)
+`
+	}
+
+	// ===== Time Checks =====
+	// Time Threshold
+	if (exists(o.time_range)) {
+		// time threshold exists
+		if (parseInt(o.time_range) !== 0) {
+			// MAYBE WE'LL DO SOMETHING HERE BUT IM WORRIED ABOUT THE EFFORT
+		}
+	} else {
+		// time threshold does not exist
+	}
+
+	// Time Start
+	if (exists(o.time_start)) {
+		// start time exists
+		time_check_start =
+`
+-- make sure start time above or equal to given
+AND (a.TIME >= ${o.time_start})
+`
+	} else {
+		// start time does not exist
+		console.log('no start time')
+	}
+
+	// Time End
+	if (exists(o.time_end)) {
+		// end time exists
+		time_check_start =
+`
+-- make sure end time below or equal to given
+AND (b.TIME <= ${o.time_end})
+`
+	} else {
+		// end time does not exist
+		console.log('no end time')
+	}
+
+	// ===== Date Checks =====
+	if (exists(o.target_date)) {
+		// date exists, get the weekday and convert it to a route type
+		var tday = dateToDay(o.target_date)
+		// any route can use daily
+		var tlist = `'DL'`
+		if (tday == 6) {
+			// sunday is only weekend but our implementation is weird so
+			// saturday can also be weekend
+			tlist += `, 'WE'`
+		}
+		if (tday >= 1 && tday <= 5) {
+			// mon to fri is weekday
+			tlist += `, 'WD'`
+		}
+		if (tday >= 1 && tday <= 6) {
+			// mon to sat is ms
+			tlist += `, 'MS'`
+		}
+		day_check =
+`
+AND r.R_Type IN (${tlist})
+`		
+	} else {
+		// date does not exist
+		console.log('no target date')
+	}
+
+	var query =
+`
+SELECT DISTINCT a.R_ID
+FROM HAS a, HAS b, LOCATION s, LOCATION e, ROUTE r
+-- join has to has, limit to relevant routes
+WHERE (a.R_ID = b.R_ID)
+AND (a.R_ID = r.R_ID)
+-- make sure location names are bound to location IDs
+AND (a.L_ID = s.L_ID)
+AND (b.L_ID = e.L_ID)
+-- make sure a is the "start" and b is the "end"
+AND (a.TIME < b.TIME)
+-- and make sure the start and end location are not the same
+AND (s.L_Name <> e.L_Name)
+
+${loc_check_start}
+${loc_check_end}
+${time_check_start}
+${time_check_end}
+${day_check}
+GROUP BY a.R_ID
+`
+	console.log("getRIDsQuery:", "\n", query)
+	return query
+}
+
+/*
 	get the query for the main search
 
 	separated for readability
 */
-function getRouteIDsQuery(o) {
-var query = 
+function getResultsQuery(o) {
+	var query = getRIDsQuery(o)
+/*
 `
-SELECT DISTINCT a.R_ID
-FROM HAS a, HAS b, LOCATION c, LOCATION d
-WHERE (a.R_ID = b.R_ID)
-AND (c.L_ID=a.L_ID)
-AND (d.L_ID=b.L_ID)
-${(false?'AND c.L_Name = startLoc':'')}
-${(false?'AND d.L_Name = endLoc':'')}
-AND (a.TIME < b.TIME)
-GROUP BY a.R_ID
+FROM ROUTE r, HAS h, LOCATION l
 `
+*/
 
-return query;
+	return query
 }
 
 /*
@@ -112,25 +252,31 @@ return query;
 
 	in progress
 */
-function getResultsInRoute(o) {
-	var query = 
-`
-SELECT r.R_ID, r.R_NAME, l.L_Name, h.TIME
-FROM ROUTE r, LOCATION l, HAS h
-WHERE (r.R_ID IN (${getRouteIDsQuery(o)}))
-AND (r.R_ID = h.R_ID)
-AND (l.L_ID = h.L_ID)
-ORDER BY r.R_ID, h.TIME
-`
+function getResults(o) {
+	var query = getResultsQuery(o)
 
-	return query
+	return tp
+	.sql(query)
+	.execute()
+	.then(function(results){
+		return Promise.resolve(results)
+	}) // follow up on the results
+	.fail(function(err) {
+		return Promise.reject(err)
+	}) // or do something if it errors
 }
+
+
+
+/*
+	Side Queries
+*/
 
 /*
 	get all driver names
 	
 	admin: 
-		true: for admin, get full driver names
+		true: for admin, get full driver info
 		false: for users, only get first name
 */
 function getDriverNames(admin) {
@@ -212,7 +358,9 @@ AND (r.R_ID = a.R_ID)
 	}) // or do something if it errors
 }
 
-// get the status and reason for buses in maintenance
+/*
+	get the status and reason for buses in maintenance
+*/
 function getMaint() {
 	var query =
 `
@@ -236,6 +384,9 @@ AND (s.Job_ID = m.Job_ID)
 	}) // or do something if it errors
 }
 
+/*
+	Get the driver's names and hours
+*/
 function getHours() {
 	var query =
 `
@@ -262,7 +413,8 @@ FROM DRIVER d
 module.exports = {
 	getSqlTable,
 	getLocations,
-	getResultsInRoute,
+	getRIDsQuery,
+	getResults,
 	getDriverNames,
 	getHolidays,
 	getBuses,
