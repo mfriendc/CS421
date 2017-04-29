@@ -156,7 +156,7 @@ AND (e.L_ID = b.L_ID)
 		time_check_start =
 `
 -- make sure start time above or equal to given
-AND (a.TIME >= ${o.time_start})
+AND (a.TIME >= '${o.time_start}')
 `
 	} else {
 		// start time does not exist
@@ -169,7 +169,7 @@ AND (a.TIME >= ${o.time_start})
 		time_check_start =
 `
 -- make sure end time below or equal to given
-AND (b.TIME <= ${o.time_end})
+AND (b.TIME <= '${o.time_end}')
 `
 	} else {
 		// end time does not exist
@@ -236,13 +236,16 @@ GROUP BY a.R_ID
 	separated for readability
 */
 function getResultsQuery(o) {
-	var query = getRIDsQuery(o)
-/*
+	var query =
 `
+SELECT r.R_ID, r.R_Name, h.TIME, l.L_ID, l.L_Name
 FROM ROUTE r, HAS h, LOCATION l
+WHERE r.R_ID IN (${getRIDsQuery(o)})
+AND (r.R_ID = h.R_ID)
+AND (h.L_ID = l.L_ID)
+ORDER BY r.R_ID, h.TIME
 `
-*/
-
+	console.log("getResultsQuery:", "\n", query)
 	return query
 }
 
@@ -250,7 +253,17 @@ FROM ROUTE r, HAS h, LOCATION l
 	Most important function, gets our beloved search datas and wraps it in
 	a nice object for the template to use
 
-	in progress
+	Object Signature:
+	[
+	R_ID: {
+		R_Name: "",
+		locations: [
+			L_ID: "",
+			L_Name: "",
+			TIME: "",
+		]
+		}
+	]
 */
 function getResults(o) {
 	var query = getResultsQuery(o)
@@ -259,7 +272,48 @@ function getResults(o) {
 	.sql(query)
 	.execute()
 	.then(function(results){
-		return Promise.resolve(results)
+		// create routes object
+		var routes = {}
+		for (i in results) if (results.hasOwnProperty(i)) {
+			// get current route
+			var r = results[i]
+			// get the current id for easy access
+			var id = r.R_ID
+			// create the current route instance if it doesn't exist
+			if (!exists(routes[id]))
+				routes[id] = {}
+			// set the id if it doesn't already exist
+			if (!exists(routes[id].R_ID))
+				routes[id].R_ID = r.R_ID
+			// set the name if it doesn't already exist
+			if (!exists(routes[id].R_Name))
+				routes[id].R_Name = r.R_Name
+			// create the locations array if it doesn't exist
+			if (!exists(routes[id].locations))
+				routes[id].locations = []
+			// push the next entry to the locations array
+			// get the time offst properly for hawaii
+			//var time_s = datetime.create(r.TIME).offsetInHours(10)
+			var time_s = (datetime.create(r.TIME, ''))
+			time_s.offsetInHours(10)
+			var pm = (parseInt(time_s.format("H")) >= 12)
+			var time_12 = time_s.format("I:M") + " " + (pm ? "PM" : "AM")
+			var time_24 = time_s.format("H:M")
+			var chosen = ""
+			if (exists(o.loc_start) && (o.loc_start == r.L_Name))
+				chosen = "start"
+			if (exists(o.loc_end) && (o.loc_end == r.L_Name))
+				chosen = "end"
+			
+			routes[id].locations.push({
+				"L_ID": r.L_ID,
+				"L_Name": r.L_Name,
+				"TIME_12": time_12,
+				"TIME_24": time_24,
+				"Chosen": chosen
+			})
+		}
+		return Promise.resolve(routes)
 	}) // follow up on the results
 	.fail(function(err) {
 		return Promise.reject(err)
@@ -414,6 +468,7 @@ module.exports = {
 	getSqlTable,
 	getLocations,
 	getRIDsQuery,
+	getResultsQuery,
 	getResults,
 	getDriverNames,
 	getHolidays,
