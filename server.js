@@ -56,23 +56,23 @@ app.post('/form', (req, res) => {
 	var data = req.body
 	console.log(data)
 	if (exists(data.target_date)) {
-
-		query.getResults(data)
-		.then((r) => {
-			//console.log("results\n--------\n", r, "\n--------\nresults")
-			console.log('Results\n========\n')
-			for (i in r) if (r.hasOwnProperty(i)) console.log(r[i])
-			console.log('\n========\nResults')
-			res.render(
-				'results_search',
-				{title:'Results', subtitle: 'Search results', query: data, table: r})
-		})
-		.fail((e) => {
-			console.log("error\n--------\n", e, "\n--------\nerror")
-		})
 		console.log(data.target_date)
 		var dt = datetime.create(data.target_date + ' 00:00')
 	}
+
+	query.getResults(data)
+	.then((r) => {
+		//console.log("results\n--------\n", r, "\n--------\nresults")
+		console.log('Results\n========\n')
+		for (i in r) if (r.hasOwnProperty(i)) console.log(r[i])
+		console.log('\n========\nResults')
+		res.render(
+			'results_search',
+			{title:'Results', subtitle: 'Search results', query: data, table: r})
+	})
+	.fail((e) => {
+		console.log("error\n--------\n", e, "\n--------\nerror")
+	})
 })
 
 
