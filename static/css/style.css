@@ -36,6 +36,7 @@ img {
 	position:absolute;
 	top:0;
 	font-size:18px;
+	height:100%;
 	font-family:"vedana";
 	background:rgba(251,251,251,0.5);
 	padding:10px 20px;
