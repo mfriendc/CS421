@@ -131,7 +131,7 @@ app.get('/admin-buses', (req, res) => {
 	.then((r) => {
 		console.log(r)
 		console.log("got")
-		res.render('results_table', {title:'Bus Status', subtitle: 'Status of all buses on each Route effected', table: r})
+		res.render('results_table', {title:'Bus Status', subtitle: 'Status of all active buses on each Route effected', table: r})
 	})
 	.fail((e) => {
 		res.send(e)
