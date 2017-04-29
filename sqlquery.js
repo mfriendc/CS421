@@ -106,6 +106,7 @@ function getRIDsQuery(o) {
 	// Location Start
 	if (exists(o.loc_start)) {
 		// start location exists, so we can specify the start segment
+		console.log('adding start location to query')
 		loc_check_start = 
 `
 -- pair start name and id
@@ -124,6 +125,7 @@ AND (s.L_ID = a.L_ID)
 	// Location End
 	if (exists(o.loc_end)) {
 		// end location exists
+		console.log('adding end location to query')
 		loc_check_end =
 `
 -- pair end name and id
@@ -153,6 +155,7 @@ AND (e.L_ID = b.L_ID)
 	// Time Start
 	if (exists(o.time_start)) {
 		// start time exists
+		console.log('adding start time to query')
 		time_check_start =
 `
 -- make sure start time above or equal to given
@@ -166,7 +169,8 @@ AND (a.TIME >= '${o.time_start}')
 	// Time End
 	if (exists(o.time_end)) {
 		// end time exists
-		time_check_start =
+		console.log('adding end time to query')
+		time_check_end =
 `
 -- make sure end time below or equal to given
 AND (b.TIME <= '${o.time_end}')
@@ -179,6 +183,7 @@ AND (b.TIME <= '${o.time_end}')
 	// ===== Date Checks =====
 	if (exists(o.target_date)) {
 		// date exists, get the weekday and convert it to a route type
+		console.log('adding date to query')
 		var tday = dateToDay(o.target_date)
 		// any route can use daily
 		var tlist = `'DL'`
