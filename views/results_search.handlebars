@@ -16,7 +16,12 @@
 			<div class="absolute-text">
 				<div class="w3-container w3-red ">
 				<h2><strong>{{title}}</strong></h2>
-				<h4><strong>{{subtitle}}</strong></h4>
+				<h4><strong>Search Results from 
+					{{#if query.loc_start}}{{query.loc_start}}{{else}}(Any start location){{/if}} 						 to {{#if query.loc_end}}{{query.loc_end}}{{else}}(Any end location){{/if}}
+					 on {{#if query.day}}{{query.day}}{{else}}(Any day){{/if}}
+					 between {{#if query.time_start}}{{query.time_start}}{{else}}(Any start time){{/if}}
+					 and {{#if query.time_end}}{{query.time_end}}{{else}}(Any end time){{/if}}
+				</strong></h4>
 				<br><br>				 
        			</div>
        			<br><br><br>
@@ -41,6 +46,10 @@
 					</tr>
 					</table>
 					
+					{{else}}
+
+					<p>No Results Found!</p>
+
 					{{/each}}
 					</strong>
 				</div><!--end container-->

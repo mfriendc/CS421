@@ -25,6 +25,7 @@ function parseTime(time) {
 }
 
 function day(d) {
+	d = datetime.create(d)
 	var days = [
 		"Sunday",
 		"Monday",
@@ -57,6 +58,7 @@ app.post('/form', (req, res) => {
 	console.log(data)
 	if (exists(data.target_date)) {
 		console.log(data.target_date)
+		data.day = day(data.target_date)
 		var dt = datetime.create(data.target_date + ' 00:00')
 	}
 
