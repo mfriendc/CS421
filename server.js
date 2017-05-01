@@ -215,10 +215,6 @@ app.get('/routes', (req, res) => {
 	})
 })
 
-app.get('/rir', (req, res) => {
-	res.send(query.getResultsInRoute())
-})
-
 app.get('/drivera', (req, res) => {
 	query.getDriverNames(true)
 	.then((r) => {
