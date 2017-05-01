@@ -404,7 +404,7 @@ WHERE (b.B_ID = a.B_ID)
 AND (r.R_ID = a.R_ID)
 `
 
-	if (!(admin)) query = 'SELECT * FROM BUS'
+	if (!(admin)) query = 'SELECT B_ID, Type FROM BUS'
 
 	return tp
 	.sql(query)
