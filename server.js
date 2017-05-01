@@ -26,6 +26,7 @@ function parseTime(time) {
 
 function day(d) {
 	d = datetime.create(d)
+	d.offsetInHours(10)
 	var days = [
 		"Sunday",
 		"Monday",
